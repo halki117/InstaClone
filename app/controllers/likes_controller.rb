@@ -1,7 +1,5 @@
 class LikesController < ApplicationController
 
-  # before_action :authenticate_user! みたいなメソッドを設定したい
-
   def create
     Like.create(user_id: current_user.id, post_id: params[:id])
     # binding.pry
