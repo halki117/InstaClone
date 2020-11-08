@@ -1,0 +1,38 @@
+doctype html
+html
+  head
+    title
+      | InstaClone
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+  bodyf
+    .app-titile.navba.nabvar-expand-md.nabvar-light.bg-light
+      = link_to root_path, class: "link_home"
+        .navbar-brand InstaClone
+      .search_form.float-right
+        = form_with method: :get, local: true do |f|
+          .form-group
+            = f.text_field :search
+            = f.submit "search", class: "btn btn-outline-success"
+      .links.float-right
+        - if current_user
+          .nav-item
+            .nav-link
+              = link_to new_post_path
+                = icon 'far', 'image fa-lg'
+              = link_to "#"
+                = icon 'far', 'comments fa-lg'
+              = link_to "#"
+                = icon 'far', 'heart fa-lg'
+              = link_to "#"
+                = icon 'far', 'user fa-lg'
+              = link_to "ログアウト", logout_path, method: :delete
+          
+        - else
+          = link_to "ログイン", login_path
+        
+  
+    .container
+      = yield

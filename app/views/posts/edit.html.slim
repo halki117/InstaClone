@@ -1,0 +1,12 @@
+.row
+  .col-md-6.col-12.offseto-md-3
+    .card
+      .card-body
+        = form_with(model: @post, local: true) do |f|
+          .form_group
+            = f.label :image, '画像'
+            = f.file_field :image, class: 'form-control'
+          .form-group
+            = f.label :decription, '本文'
+            = f.text_area :decription, class: 'form-control'
+          = f.submit '登録する', class: "btn btn-success"

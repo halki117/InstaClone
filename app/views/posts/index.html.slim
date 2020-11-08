@@ -1,0 +1,61 @@
+.row
+  .col-md-8.col-12
+    -if @posts.size != 0
+      - @posts.each do |post|
+        .card.m-5
+          .card-header.d-flex
+            = post.user.name
+            .links.d-flex
+              .link_destroy
+                = link_to post_path(post), method: :delete, data: { confirm: "投稿を削除しますか？"}
+                  = icon 'far','trash-alt fa-lg'
+              .link_edit
+                = link_to edit_post_path(post)
+                  = icon 'far', 'edit fa-lg'
+          .swiper-container
+            = link_to post_path(post)
+              = image_tag "#{post.image}"
+          .card-body
+            .post_description
+              = post.decription  
+            .post_like
+              - if current_user
+                - if current_user.liked_by?(post.id)
+                  td 
+                    = link_to "いいねを外す",post_like_path(post.id, post.liked_by(current_user)), method: :DELETE
+                - else
+                  td
+                    = link_to "いいね", post_likes_path(post), method: :POST
+            / div*{ class: "post_like", id: "like-icon-post-#{post.id.to_s}"}
+            /   - if post.liked_by(current_user).present?
+            /     = link_to post_like_path(post.id, post.liked_by(current_user)), method: :DELETE, remote: true, class: "love_delete"
+            /       = icon 'fas', 'heart'
+            /       = post.likes.count
+            /   -else
+            /     = link_to post_likes_path(post), method: :POST, remote: true, class: "love_post"
+            /       = icon 'far', 'heart'
+            /       = post.likes.count
+            / div*{class: "post_like", id: "like-text-post-#{post.id.to_s}"}
+            /   = render "like_text", {likes: post.likes}
+
+            .post_created_at.float-right
+              = post.created_at.strftime('%Y/ %m/ %d　　%H: %m')
+    - else
+      .word
+        p 該当する投稿はありませんでした。
+    = paginate @posts
+        
+  .col-md-4.col-12
+    .users-box.mt-5
+      - if current_user
+        = @user.name
+      - else
+        = nil
+      .card
+        .card-header
+          | ユーザー
+        - @users[0..4].each do |user|
+          .card-body
+            = user.name
+        .card-footer
+          = link_to "すべて見る", users_path

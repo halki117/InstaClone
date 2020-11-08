@@ -1,0 +1,9 @@
+p
+  | user一覧
+
+.row
+  .col-md-6.offset-md-3
+    - @users.each do |user|
+      .card
+        .card-body
+          = user.name
