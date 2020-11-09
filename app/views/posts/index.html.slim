@@ -23,9 +23,11 @@
                 - if current_user.liked_by?(post.id)
                   td 
                     = link_to "いいねを外す",post_like_path(post.id, post.liked_by(current_user)), method: :DELETE
+                      = icon 'fas', 'heart fa-lg'
                 - else
                   td
-                    = link_to "いいね", post_likes_path(post), method: :POST
+                    = link_to post_likes_path(post), method: :POST 
+                      = icon 'far', 'heart fa-lg'
 
             .post_created_at.float-right
               = post.created_at.strftime('%Y/ %m/ %d　　%H: %m')
